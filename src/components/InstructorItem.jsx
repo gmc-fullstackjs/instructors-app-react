@@ -13,7 +13,7 @@ class InstructorItem extends React.Component {
                 <button
                     className='btn btn-warning'
                     onClick={() => {
-                        this.props.handleToggle()
+                        this.props.handleToggle(this.props.idx)
                     }}
                 >Edit</button>
                 <button

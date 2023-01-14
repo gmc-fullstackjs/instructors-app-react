@@ -10,20 +10,23 @@ class App extends React.Component {
     this.state = {
       instructor: '',
       instructors: [],
-      isModalOpen: false
+      isModalOpen: false,
+      itemToEdit: null
     }
 
     this.removeInstructor = this.removeInstructor.bind(this)
     this.addInstructor = this.addInstructor.bind(this)
     this.toggleModal = this.toggleModal.bind(this)
+    this.applyEdit = this.applyEdit.bind(this)
 
   }
 
-  toggleModal() {
+  toggleModal(idx) {
     console.log(this.state.isModalOpen)
     this.setState({
       ...this.state,
-      isModalOpen: !this.state.isModalOpen
+      isModalOpen: !this.state.isModalOpen,
+      itemToEdit: idx
     })
   }
 
@@ -49,6 +52,18 @@ class App extends React.Component {
       ...this.state,
       instructors: newInstructors
     })
+  }
+
+
+  applyEdit(idx, newName) {
+    let newInstructors = Array.from(this.state.instructors)
+    newInstructors[idx] = newName
+    this.setState({
+      ...this.state,
+      instructors: newInstructors,
+      isModalOpen: false
+    })
+
   }
 
   render() {
@@ -84,7 +99,14 @@ class App extends React.Component {
           </ul>
         </div>
 
-        {this.state.isModalOpen ? <Modal handleToggle={this.toggleModal} /> : <></>}
+        {this.state.isModalOpen ? <Modal
+
+          handleToggle={this.toggleModal}
+          // handleItemToedit
+          applyEdit={this.applyEdit}
+          instructorIdx={this.state.itemToEdit}
+          instructor={this.state.instructors[this.state.itemToEdit]}
+        /> : <></>}
 
 
 
